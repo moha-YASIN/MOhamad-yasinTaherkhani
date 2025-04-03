@@ -1,0 +1,1 @@
+np.flip(array, axis=0)

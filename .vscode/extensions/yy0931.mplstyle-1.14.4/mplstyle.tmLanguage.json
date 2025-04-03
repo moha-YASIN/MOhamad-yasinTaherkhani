@@ -1,0 +1,78 @@
+{
+    "name": "mplstyle",
+    "scopeName": "source.mplstyle",
+    "patterns": [
+        {
+            "name": "comment.line.number-sign.mplstyle",
+            "begin": "(\\#)",
+            "beginCaptures": {
+                "1": {
+                    "name": "punctuation.definition.comment.mplstyle"
+                }
+            },
+            "end": "($)"
+        },
+        {
+            "comment": "Parameters that take Python expressions",
+            "begin": "^\\s*(axes\\.prop_cycle)\\s*(:)?",
+            "end": "$",
+            "beginCaptures": {
+                "0": { "name": "entity.name.label.mplstyle" }
+            },
+            "endCaptures": {
+                "0": { "name": "punctuation.separator.key-value.mapping.mplstyle" }
+            },
+            "name": "meta.embedded.line.python",
+            "patterns": [
+                {
+                    "comment": "Highlight function calls",
+                    "name": "entity.name.function.mplstyle",
+                    "match": "\\b\\w+(?=\\()"
+                },
+                { "include": "source.python" }
+            ]
+        },
+        {
+            "comment": "Parameters that take any values",
+            "match": "^\\s*((?:\\w|-|[.])+)\\s*(:)?",
+            "captures": {
+                "1": {
+                    "name": "entity.name.label.mplstyle"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value.mapping.mplstyle"
+                }
+            }
+        },
+        {
+            "comment": "Boolean literals. See https://github.com/matplotlib/matplotlib/blob/3a265b33fdba148bb340e743667c4ba816ced928/lib/matplotlib/rcsetup.py#L142-L142 and // https://github.com/matplotlib/matplotlib/blob/3a265b33fdba148bb340e743667c4ba816ced928/lib/matplotlib/rcsetup.py#L199",
+            "name": "constant.language.mplstyle",
+            "match": "(?i)\\b(?:t|y|yes|on|true|f|n|no|off|false|none)\\b"
+        },
+        {
+            "comment": "Date",
+            "name": "constant.numeric.mplstyle",
+            "match": "\\d{4}-\\d{2}-[0-9\\-A-Za-z:]+"
+        },
+        {
+            "comment": "Numeric literals",
+            "name": "constant.numeric.mplstyle",
+            "match": "(?<=[^\\w])[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)\\b"
+        },
+        {
+            "name": "punctuation.separator.comma.mplstyle",
+            "match": ","
+        },
+        {
+            "match": "(([^\\s,\\[\\]()]+))",
+            "captures": {
+                "1": {
+                    "name": "support.constant.property-value.mplstyle"
+                },
+                "2": {
+                    "name": "meta.property-value.mplstyle"
+                }
+            }
+        }
+    ]
+}

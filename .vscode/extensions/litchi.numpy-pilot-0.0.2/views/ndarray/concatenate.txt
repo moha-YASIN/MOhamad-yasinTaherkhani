@@ -1,0 +1,1 @@
+np.concatenate((array1, array2), axis=0)

@@ -1,0 +1,95 @@
+{
+	"name": "numpy-pilot",
+	"displayName": "NumPy Pilot",
+	"description": "图形化生成 NumPy 函数调用脚本",
+	"icon": "image/numpypilot.logo.t.png",
+	"version": "0.0.2",
+	"publisher": "litchi",
+	"engines": {
+		"vscode": "^1.72.0"
+	},
+	"categories": [
+		"Data Science"
+	],
+	"keywords": [
+		"numpy",
+		"snippets",
+		"linear algebra",
+		"statistical analysis",
+		"template",
+		"jupyter notebook",
+		"mathematical operations",
+		"array manipulation"
+	],
+	"activationEvents": [],
+	"main": "./out/extension.js",
+	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "numpybar",
+					"title": "NUMPY",
+					"icon": "image/numpypilot.svg"
+				}
+			]
+		},
+		"views": {
+			"numpybar": [
+				{
+					"type": "webview",
+					"id": "io",
+					"name": "读写数组"
+				},
+				{
+					"type": "webview",
+					"id": "create",
+					"name": "创建"
+				},
+				{
+					"type": "webview",
+					"id": "ndarray",
+					"name": "数组操作"
+				}
+			]
+		},
+		"commands": [
+			{
+				"command": "numpy-pilot.helloWorld",
+				"title": "Hello World"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "vscode-test"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.72.0",
+		"@types/mocha": "^10.0.6",
+		"@types/node": "18.x",
+		"@typescript-eslint/eslint-plugin": "^7.4.0",
+		"@typescript-eslint/parser": "^7.4.0",
+		"eslint": "^8.57.0",
+		"typescript": "^5.3.3",
+		"@vscode/test-cli": "^0.0.8",
+		"@vscode/test-electron": "^2.3.9"
+	},
+	"__metadata": {
+		"id": "5a360b52-4664-458f-81d5-8a79e0f4072a",
+		"publisherId": "94d53034-b0e6-44d5-9753-3c78cfc157b9",
+		"publisherDisplayName": "litchi",
+		"targetPlatform": "undefined",
+		"isApplicationScoped": false,
+		"isPreReleaseVersion": false,
+		"hasPreReleaseVersion": false,
+		"installedTimestamp": 1732685495208,
+		"pinned": false,
+		"preRelease": false,
+		"source": "gallery",
+		"size": 386392
+	}
+}

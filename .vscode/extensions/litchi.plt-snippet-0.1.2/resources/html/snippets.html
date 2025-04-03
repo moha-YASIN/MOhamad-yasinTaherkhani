@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>
+        snippet
+    </title>
+</head>
+
+<body>
+    <div id="colorWrapper" style="display: flex; align-items: center;">
+        <div id="colorValue" onclick="copyColorValue()"
+            style="text-align: center; margin-right: 2px; width: 80%; text-overflow: ellipsis; white-space: nowrap;">
+            #0e639c
+        </div>
+        <input id="color" name="color" style="height: 32px; aspect-ratio: 1;" title="获取指定颜色的十六进制颜色表示" type="color"
+            value="#0e639c" />
+    </div>
+    <h4 style="text-align: center;">
+        其它工具
+    </h4>
+    <button id="concept" style="width: 100%;" title="查看颜色-color、标识符-marker、线型-linestyle、cmp等常见概念">
+        常见概念
+    </button>
+    <button id="template" style="width: 100%;" title="打开notebook模板视图，点击按钮在本地生成">
+        绘图模板
+    </button>
+    <button id="customTemplate" style="width: 100%;" title="打开自定模板网页视图">
+        自定义模板
+    </button>
+    <h4 style="text-align: center;">
+        侧边栏管理
+    </h4>
+    <!-- <button id="modify" title="自定义侧边栏视图" style="width: 48%;">自定义</button> -->
+    <!-- <button id="refresh" title="刷新侧边栏视图，重启VS Code生效" style="width: 48%;">刷新</button> -->
+
+    <div class="switch-container" style="margin: 0 auto; display: flex; align-items: center; width: fit-content;">
+        <span class="text">原生</span>
+        <label class="switch">
+            <input type="checkbox" id="sidebarToggle">
+            <span class="slider round"></span>
+        </label>
+        <span class="text">个性</span>
+    </div>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+</body>
+
+</html>

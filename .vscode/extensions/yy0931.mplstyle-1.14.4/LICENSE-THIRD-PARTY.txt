@@ -1,0 +1,3 @@
+"module name","license","repository"
+"json5@2.2.3","MIT","https://github.com/json5/json5"
+"mplstyle@1.14.4","MIT","https://github.com/yy0931/vscode-mplstyle"

@@ -1,0 +1,1 @@
+np.average(array, axis=0)

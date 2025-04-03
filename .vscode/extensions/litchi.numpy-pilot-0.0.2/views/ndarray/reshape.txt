@@ -1,0 +1,1 @@
+array.reshape((-1,2))

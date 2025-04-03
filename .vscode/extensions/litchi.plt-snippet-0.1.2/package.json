@@ -1,0 +1,150 @@
+{
+	"name": "plt-snippet",
+	"displayName": "Matplotlib Pilot (Chinese)",
+	"description": "提供Matplotlib代码片段、模板等工具",
+	"icon": "resources/logo/MPC_filled.png",
+	"version": "0.1.2",
+	"publisher": "litchi",
+	"engines": {
+		"vscode": "^1.72.0"
+	},
+	"categories": [
+		"Data Science",
+		"Visualization",
+		"Education"
+	],
+	"keywords": [
+		"matplotlib",
+		"snippet",
+		"template",
+		"jupyter notebook",
+		"matplotlib style"
+	],
+	"activationEvents": [],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "sidebar_plt",
+					"title": "Matplotlib Pilot Chinese",
+					"icon": "resources/logo/MPC.svg"
+				}
+			]
+		},
+		"views": {
+			"sidebar_plt": [
+				{
+					"type": "webview",
+					"id": "pltSidebarView",
+					"name": "main",
+					"dataProvider": "pltSidebarProvider"
+				}
+			]
+		},
+		"dataProviders": [
+			{
+				"id": "pltSidebarProvider",
+				"provides": "pltSidebarView"
+			}
+		],
+		"commands": [
+			{
+				"command": "plt-snippet.loadtxt",
+				"category": "MPC",
+				"title": "load txt data"
+			},
+			{
+				"command": "plt-snippet.load",
+				"category": "MPC",
+				"title": "load numpy data"
+			},
+			{
+				"command": "plt-snippet.defineCustomTemplate",
+				"category": "MPC",
+				"title": "define custom template"
+			},
+			{
+				"command": "plt-snippet.modifySidebar",
+				"category": "MPC",
+				"title": "modify sidebar"
+			},
+			{
+				"command": "plt-snippet.resetSidebar",
+				"category": "MPC",
+				"title": "reset sidebar"
+			},
+			{
+				"command": "plt-snippet.refreshSidebar",
+				"category": "MPC",
+				"title": "refresh sidebar"
+			}
+		],
+		"configuration": {
+			"title": "Matplotlib Pilot Chinese",
+			"properties": {
+				"plt-snippet.customSideBar": {
+					"type": "boolean",
+					"default": false,
+					"description": "默认打开自定义侧边栏"
+				},
+				"plt-snippet.customSideBarNotebookPath": {
+					"type": "string",
+					"default": "",
+					"description": "自定义侧边栏网页路径"
+				},
+				"plt-snippet.customSideBarHtmlPath": {
+					"type": "string",
+					"default": "",
+					"description": "自定义侧边栏网页路径"
+				},
+				"plt-snippet.customTemplateHtml": {
+					"type": "string",
+					"default": "",
+					"description": "自定义模板网页路径"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run package",
+		"compile": "webpack",
+		"watch": "webpack --watch",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"compile-tests": "tsc -p . --outDir out",
+		"watch-tests": "tsc -p . -w --outDir out",
+		"pretest": "npm run compile-tests && npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "vscode-test"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.24.5",
+		"@babel/preset-env": "^7.24.5",
+		"@types/mocha": "^10.0.6",
+		"@types/node": "^18.19.50",
+		"@types/vscode": "^1.72.0",
+		"@typescript-eslint/eslint-plugin": "^7.4.0",
+		"@typescript-eslint/parser": "^7.4.0",
+		"@vscode/test-cli": "^0.0.8",
+		"@vscode/test-electron": "^2.3.9",
+		"babel-loader": "^9.1.3",
+		"copy-webpack-plugin": "^12.0.2",
+		"eslint": "^8.57.0",
+		"ts-loader": "^9.5.1",
+		"typescript": "^5.3.3",
+		"webpack": "^5.91.0",
+		"webpack-cli": "^5.1.4"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/wuyao1997/Matplotlib-Pilot-Chinese"
+	},
+	"dependencies": {
+		"cheerio": "^1.0.0-rc.12",
+		"json5": "^2.2.3"
+	},
+	"__metadata": {
+		"installedTimestamp": 1739444980177,
+		"size": 7521628
+	}
+}

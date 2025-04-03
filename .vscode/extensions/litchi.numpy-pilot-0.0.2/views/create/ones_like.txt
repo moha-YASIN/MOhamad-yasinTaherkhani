@@ -1,0 +1,1 @@
+np.ones_like(another_array)

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   绘图API
+  </title>
+  <style type="text/css">
+   :root {
+  --container-paddding: 20px;
+  --input-padding-vertical: 6px;
+  --input-padding-horizontal: 4px;
+  --input-margin-vertical: 4px;
+  --input-margin-horizontal: 0;
+}
+
+body {
+  padding: 0 var(--container-paddding);
+  color: var(--vscode-foreground);
+  font-size: var(--vscode-font-size);
+  font-weight: var(--vscode-font-weight);
+  font-family: var(--vscode-font-family);
+  background-color: var(--vscode-editor-background);
+}
+
+ol,
+ul {
+  padding-left: var(--container-paddding);
+}
+
+body > *,
+form > * {
+  margin-block-start: var(--input-margin-vertical);
+  margin-block-end: var(--input-margin-vertical);
+}
+
+*:focus {
+  outline-color: var(--vscode-focusBorder) !important;
+}
+
+a {
+  color: var(--vscode-textLink-foreground);
+}
+
+a:hover,
+a:active {
+  color: var(--vscode-textLink-activeForeground);
+}
+
+code {
+  font-size: var(--vscode-editor-font-size);
+  font-family: var(--vscode-editor-font-family);
+}
+
+.button-container {
+    display: flex;
+    flex-wrap: wrap; /* 允许换行 */
+    gap: 2px; /* 按钮之间的间距 */
+}
+  
+.button-container button {
+    border: none;
+    flex-basis: calc(50% - 1px); /* 每个按钮占据50%宽度减去半个gap，以适应间距 */
+    text-align: center;
+    outline: 1px solid transparent;
+    outline-offset: 2px !important;
+    padding: var(--input-padding-vertical) var(--input-padding-horizontal);
+    color: var(--vscode-button-foreground);
+    background: var(--vscode-button-background);
+}
+
+button:hover {
+  cursor: pointer;
+  background: var(--vscode-button-hoverBackground);
+}
+
+button:focus {
+  outline-color: var(--vscode-focusBorder);
+}
+
+button.secondary {
+  color: var(--vscode-button-secondaryForeground);
+  background: var(--vscode-button-secondaryBackground);
+}
+
+button.secondary:hover {
+  background: var(--vscode-button-secondaryHoverBackground);
+}
+
+input:not([type="checkbox"]),
+textarea {
+  display: block;
+  width: 100%;
+  border: none;
+  font-family: var(--vscode-font-family);
+  padding: var(--input-padding-vertical) var(--input-padding-horizontal);
+  color: var(--vscode-input-foreground);
+  outline-color: var(--vscode-input-border);
+  background-color: var(--vscode-input-background);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--vscode-input-placeholderForeground);
+}
+  </style>
+ </head>
+ <body>
+  <button data-snippets="" id="bar3d" title="三维柱状图">
+   3D柱状图
+  </button>
+  <button data-snippets="" id="scatter3d" title="三维散点图">
+   3D散点图
+  </button>
+  <button data-snippets='fig, axs = plt.subplots(nrows=1, ncols=2, 
+                        figsize=(7, 3),
+                        gridspec_kw={
+                            "width_ratios": [0.5, 0.5],
+                            "wspace": 0.25
+                        })
+' id="subplots" title="在同一张图重绘制多个坐标系">
+   多图布局
+  </button>
+  <button data-snippets="#### 简化的、常用的样式表
+
+## 目录
+##     - LINES - 线条
+##     - FONT - 字体
+##     - AXES - 坐标系
+##     - TICKS - 刻度
+##     - LEGEND - 图例
+##     - FIGURE - 图片
+##     - SAVING FIGURES - 保存图片
+
+
+## ***************************************************************************
+## * LINES - 线条                                                             *
+## ***************************************************************************
+## 链接：https://matplotlib.org/stable/api/artist_api.html#module-matplotlib.lines
+#lines.linewidth: 1.5               # 线宽
+#lines.linestyle: solid            # 线型，solid | dashed | dashdot | dotted
+#lines.color:     C0                # has no affect on plot(); 
+#lines.marker:          None        # 标识符默认样式，o|s|p|X|*|v| &gt; | &lt; | ^ 
+#lines.markerfacecolor: auto        # 标识符默认颜色
+#lines.markeredgecolor: auto        # 标识符默认边缘颜色
+#lines.markeredgewidth: 1.0         # 标识符默认边缘线宽
+#lines.markersize:      6           # 标识符默认尺寸
+#lines.antialiased: True            # 抗锯齿开关
+
+
+## ***************************************************************************
+## * FONT - 字体                                                              *
+## ***************************************************************************
+## 链接：https://matplotlib.org/stable/api/font_manager_api.html for more information
+
+#text.color: black     # 文字颜色
+#text.antialiased: True  # 抗锯齿
+
+# 字体族，                     衬线   |  无衬线    |   草书   |  幻想体   |  等宽
+#font.family:  sans-serif  # serif | sans-serif | cursive | fantasy | monospace
+#font.style:   normal      # normal | italic
+#font.weight:  normal      # 字重
+#font.size:    10.0
+
+# 设置字体族font.family后，设置优先字体
+#font.serif:      DejaVu Serif, Bitstream Vera Serif, Computer Modern Roman, New Century Schoolbook, Century Schoolbook L, Utopia, ITC Bookman, Bookman, Nimbus Roman No9 L, Times New Roman, Times, Palatino, Charter, serif
+#font.sans-serif: DejaVu Sans, Bitstream Vera Sans, Computer Modern Sans Serif, Lucida Grande, Verdana, Geneva, Lucid, Arial, Helvetica, Avant Garde, sans-serif
+#font.cursive:    Apple Chancery, Textile, Zapf Chancery, Sand, Script MT, Felipa, Comic Neue, Comic Sans MS, cursive
+#font.fantasy:    Chicago, Charcoal, Impact, Western, xkcd script, fantasy
+#font.monospace:  DejaVu Sans Mono, Bitstream Vera Sans Mono, Computer Modern Typewriter, Andale Mono, Nimbus Mono L, Courier New, Courier, Fixed, Terminal, monospace
+
+
+## ***************************************************************************
+## * AXES - 坐标系                                                            *
+## ***************************************************************************
+## 链接：https://matplotlib.org/stable/api/axes_api.html#module-matplotlib.axes
+#xaxis.labellocation: center    # X轴标签横向位置: {left, right, center}
+#yaxis.labellocation: center    # Y轴标签纵向位置: {bottom, top, center}
+#axes.facecolor:     white      # 背景色
+#axes.edgecolor:     black      # 轴的颜色
+#axes.linewidth:     0.8        # 轴的线宽
+#axes.grid:          False      # 是否显示网格
+#axes.grid.axis:     both       # 在哪些轴打开网格， x | y | both
+#axes.grid.which:    major      # 在哪些刻度打开网格，major | minor | both 
+#axes.titlelocation: center     # 图标题横向位置 {left, right, center}
+#axes.titlesize:     large      # 标题字体
+#axes.titleweight:   normal     # 标题字重
+#axes.titlecolor:    auto       # 标题颜色
+#axes.titley:        None       # 标题纵向位置
+#axes.titlepad:      6.0        # 标题与坐标系距离
+#axes.labelsize:     medium     # 轴标签字号
+#axes.labelpad:      4.0        # 轴标签与轴的距离
+#axes.labelweight:   normal     # 轴标签字重
+#axes.labelcolor:    black      # 轴标签颜色
+#axes.spines.left:   True       # 轴边框
+#axes.spines.bottom: True
+#axes.spines.top:    True
+#axes.spines.right:  True
+
+#grid.color:     &quot;#b0b0b0&quot;  # 网格线颜色
+#grid.linestyle: -          # 网格线型
+#grid.linewidth: 0.8        # 网格线宽
+#grid.alpha:     1.0        # 网格线透明度
+
+# 颜色循环：https://matplotlib.org/stable/users/explain/artists/color_cycle.html
+#axes.prop_cycle: cycler('color', ['1f77b4', 'ff7f0e', '2ca02c', 'd62728', '9467bd', '8c564b', 'e377c2', '7f7f7f', 'bcbd22', '17becf'])
+#axes.xmargin:   .05        # x 方向空白边距
+#axes.ymargin:   .05        # y 方向空白边距
+#axes.zmargin:   .05        # z 方向空白边距
+#axes.autolimit_mode: data  # 轴刻度分布，data | round_numbers
+
+#polaraxes.grid:    True    # 极坐标图是否打开网格
+#axes3d.grid:       True    # 3D绘图是否打开网格
+#axes3d.automargin: False   # 手动设置三维轴上下限时自动添加边距
+#axes3d.xaxis.panecolor:    (0.95, 0.95, 0.95, 0.5)     # x方向背景色
+#axes3d.yaxis.panecolor:    (0.90, 0.90, 0.90, 0.5)     # y方向背景色
+#axes3d.zaxis.panecolor:    (0.925, 0.925, 0.925, 0.5)  # z方向背景色
+
+## ***************************************************************************
+## * TICKS - 轴刻度                                                           *
+## ***************************************************************************
+## 链接：https://matplotlib.org/stable/api/axis_api.html#matplotlib.axis.Tick
+#xtick.top:           False   # 上边框刻度
+#xtick.bottom:        True    # 下边框刻度
+#xtick.labeltop:      False   # 上边框标签
+#xtick.labelbottom:   True    # 下边框标签
+#xtick.major.size:    3.5     # 主刻度高度
+#xtick.minor.size:    2       # 次刻度高度
+#xtick.major.width:   0.8     # 主刻度宽度
+#xtick.minor.width:   0.6     # 次刻度宽度
+#xtick.major.pad:     3.5     # 主刻度标签与轴的距离
+#xtick.minor.pad:     3.4     # 次刻度标签与轴的距离
+#xtick.color:         black   # 刻度颜色
+#xtick.labelcolor:    inherit # 刻度标签颜色
+#xtick.labelsize:     medium  # 刻度标签字号
+#xtick.direction:     out     # 刻度方向， {in, out, inout}
+#xtick.minor.visible: False   # 次刻度可见性
+#xtick.major.top:     True    # 上边框是否打开主刻度
+#xtick.major.bottom:  True    # 下边框是否打开主刻度
+#xtick.minor.top:     True    # 上边框是否打开次刻度
+#xtick.minor.bottom:  True    # 下边框是否打开次刻度
+#xtick.minor.ndivs:   auto    # 主刻度间有几个次刻度
+#xtick.alignment:     center  # 刻度标签与刻度的对齐方式
+
+#ytick.left:          True    # 上边框刻度
+#ytick.right:         False   # 下边框刻度
+#ytick.labelleft:     True    # 上边框标签
+#ytick.labelright:    False   # 下边框标签
+#ytick.major.size:    3.5     # 主刻度高度
+#ytick.minor.size:    2       # 次刻度高度
+#ytick.major.width:   0.8     # 主刻度宽度
+#ytick.minor.width:   0.6     # 次刻度宽度
+#ytick.major.pad:     3.5     # 主刻度标签与轴的距离
+#ytick.minor.pad:     3.4     # 次刻度标签与轴的距离
+#ytick.color:         black   # 刻度颜色
+#ytick.labelcolor:    inherit # 刻度标签颜色
+#ytick.labelsize:     medium  # 刻度标签字号
+#ytick.direction:     out     # 刻度方向，{in, out, inout}
+#ytick.minor.visible: False   # 次刻度可见性
+#ytick.major.left:    True    # 上边框是否打开主刻度
+#ytick.major.right:   True    # 下边框是否打开主刻度
+#ytick.minor.left:    True    # 上边框是否打开次刻度
+#ytick.minor.right:   True    # 下边框是否打开次刻度
+#ytick.minor.ndivs:   auto    # 主刻度间有几个次刻度
+#ytick.alignment:     center_baseline  # 刻度标签与刻度的对齐方式
+
+
+## ***************************************************************************
+## * LEGEND - 图例                                                            *
+## ***************************************************************************
+#legend.loc:           best     # 位置
+#legend.frameon:       True     # 图例边框
+#legend.framealpha:    0.8      # 图例透明度
+#legend.facecolor:     inherit  # 图例背景色
+#legend.edgecolor:     0.8      # 图例边框颜色
+#legend.fancybox:      True     # 圆角边框
+#legend.shadow:        False    # 阴影效果
+#legend.numpoints:     1        # 图例中标识符个数
+#legend.markerscale:   1.0      # 标识符相对大小
+#legend.fontsize:      medium   # 图例字号
+#legend.labelcolor:    None     # 图例文字颜色
+#legend.title_fontsize: None    # 图例标题字号
+#legend.borderpad:     0.4      # 边框宽度
+#legend.labelspacing:  0.5      # 图例中各项竖向间距
+#legend.handlelength:  2.0      # 图例中标识长度
+#legend.handleheight:  0.7      # 图例中标识高度
+#legend.handletextpad: 0.8      # 图例中标识与文字的间距
+#legend.borderaxespad: 0.5      # 图例边框与坐标系间距
+#legend.columnspacing: 2.0      # 图例中列间距
+
+
+## ***************************************************************************
+## * FIGURE - 图片                                                            *
+## ***************************************************************************
+## 链接：https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure
+#figure.titlesize:   large      # 图片标题字号
+#figure.titleweight: normal     # 图片标题字重
+#figure.figsize:     6.4, 4.8   # 图片尺寸
+#figure.dpi:         100        # 图片每英寸像素
+#figure.facecolor:   white      # 背景颜色
+#figure.edgecolor:   white      # 图片边框颜色
+#figure.frameon:     True       # 是否显示图片边框
+#figure.max_open_warning: 20    # 最大开启的图片数，避免使用者忘记关闭图片导致内存占用太高
+
+#figure.subplot.left:   0.125   # 坐标系与图片的边距
+#figure.subplot.right:  0.9     # 
+#figure.subplot.bottom: 0.11    # 
+#figure.subplot.top:    0.88    # 
+#figure.subplot.wspace: 0.2     # 多列坐标系时，坐标系之间的横向间距
+#figure.subplot.hspace: 0.2     # 多行坐标系时，坐标系之间的纵向间距
+#figure.autolayout: False       # 是否自动布局
+
+
+## ***************************************************************************
+## * SAVING FIGURES - 保存图片                                                 *
+## ***************************************************************************
+#savefig.dpi:       figure      # 每英寸像素
+#savefig.facecolor: auto        # 图片背景色
+#savefig.edgecolor: auto        # 图片边框色
+#savefig.format:    png         # 保存格式，{png, ps, pdf, svg}
+#savefig.bbox:      standard    # {tight, standard}
+#savefig.pad_inches:  0.1       # bbox设置为'tight'时，保存图片的边框
+#savefig.transparent: False     # 是否开启透明背景" id="subplots" title="生成样式表">
+   样式表
+  </button>
+  <script type="text/javascript">
+   const vscode = acquireVsCodeApi();
+let isDoubleClickProcessing = false;
+
+const buttons = document.querySelectorAll('button');
+
+// 假设buttons是一个包含你想要添加事件监听器的按钮元素的数组
+buttons.forEach(button => {
+    button.addEventListener('click', function(event) {
+        if (!isDoubleClickProcessing) {
+            // 设置标志，等待可能的双击
+            isDoubleClickProcessing = true;
+            setTimeout(() => {
+                if (isDoubleClickProcessing) {
+                    // 如果没有发生双击，则处理单击事件
+                    vscode.postMessage({
+                        "id": this.id,
+                        "snippets": this.dataset.snippets,
+                        "event": "click"
+                    });
+                    isDoubleClickProcessing = false;
+                }
+            }, 200); // 双击检测时间阈值
+        } else {
+            // 处理双击事件
+            vscode.postMessage({
+                "id": this.id,
+                "snippets": this.dataset.snippets,
+                "event": "doubleClick"
+            });
+            isDoubleClickProcessing = false;
+        }
+    });
+});
+  </script>
+ </body>
+</html>

@@ -1,0 +1,1 @@
+np.flatten(array)

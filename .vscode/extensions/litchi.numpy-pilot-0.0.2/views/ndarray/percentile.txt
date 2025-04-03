@@ -1,0 +1,1 @@
+np.percentile(array, 50)

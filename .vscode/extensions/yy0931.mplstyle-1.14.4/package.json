@@ -1,0 +1,148 @@
+{
+	"name": "mplstyle",
+	"displayName": "mplstyle (Matplotlib)",
+	"description": "Intellisense for .mplstyle and matplotlibrc files",
+	"version": "1.14.4",
+	"license": "MIT",
+	"publisher": "yy0931",
+	"icon": "matplotlib/logo.png",
+	"repository": {
+		"url": "https://github.com/yy0931/vscode-mplstyle",
+		"type": "git"
+	},
+	"bugs": {
+		"url": "https://github.com/yy0931/vscode-mplstyle/issues"
+	},
+	"keywords": [
+		"matplotlib",
+		"pyplot",
+		"mplstyle",
+		"rcParams",
+		"python"
+	],
+	"engines": {
+		"vscode": "^1.60.0"
+	},
+	"categories": [
+		"Programming Languages"
+	],
+	"activationEvents": [
+		"onLanguage:mplstyle",
+		"onLanguage:python"
+	],
+	"main": "./src/extension__node.js",
+	"browser": "./src/extension__browser.js",
+	"contributes": {
+		"languages": [
+			{
+				"id": "mplstyle",
+				"extensions": [
+					".mplstyle"
+				],
+				"filenames": [
+					"matplotlibrc"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "mplstyle",
+				"scopeName": "source.mplstyle",
+				"embeddedLanguages": {
+					"meta.embedded.line.python": "python"
+				},
+				"path": "./mplstyle.tmLanguage.json"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "mplstyle",
+			"properties": {
+				"mplstyle.hover.matplotlibPath": {
+					"type": "string",
+					"default": "",
+					"description": "The installation directory of matplotlib used to generate the documentation, e.g. /home/foo/.local/lib/python3.10/site-packages/matplotlib. The data shipped with the extension will be used if the value is an empty string."
+				},
+				"mplstyle.hover.showImages": {
+					"type": "boolean",
+					"default": true,
+					"description": "Controls whether to show images in hover"
+				},
+				"mplstyle.completion.keywords.bool": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"minLength": 1
+					},
+					"uniqueItems": true,
+					"default": [
+						"t",
+						"y",
+						"yes",
+						"on",
+						"True",
+						"1",
+						"f",
+						"n",
+						"no",
+						"off",
+						"False",
+						"0"
+					]
+				},
+				"mplstyle.completion.keywords.none": {
+					"type": "string",
+					"default": "None",
+					"minLength": 1
+				},
+				"mplstyle.diagnostics.ignoredKeys": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"default": []
+				}
+			}
+		}
+	},
+	"capabilities": {
+		"virtualWorkspaces": true,
+		"untrustedWorkspaces": {
+			"supported": true
+		}
+	},
+	"scripts": {
+		"prepare": "python3 scripts/generate_documentation_images.py",
+		"build": "npm run build:license && npm run build:node && npm run build:browser",
+		"watch": "npm run build:license && concurrently \"npm run build:node -- --watch\" \"npm run build:browser -- --watch\"",
+		"build:license": "license-checker --production --csv --out LICENSE-THIRD-PARTY.txt",
+		"build:node": "esbuild --bundle src/extension.ts --outfile=./src/extension__node.js --external:vscode --target=esnext --format=cjs --platform=node",
+		"build:browser": "esbuild --bundle src/extension.ts --outfile=./src/extension__browser.js --external:vscode --target=esnext --format=cjs --define:process.env.browser=true",
+		"clean": "shx rm -f \"src/**/*.js\" && shx rm -f \"src/**/codicon.css\" && shx rm -f LICENSE-THIRD-PARTY.txt",
+		"vscode:prepublish": "npm run build",
+		"test": "jest",
+		"start-browser": "npm run build && vscode-test-web --extensionDevelopmentPath=."
+	},
+	"dependencies": {
+		"json5": "^2.2.3"
+	},
+	"devDependencies": {
+		"@types/jest": "^29.5.12",
+		"@types/node": "^16.16.3",
+		"@types/vscode": "^1.60.0",
+		"@vscode/test-web": "^0.0.51",
+		"concurrently": "^8.2.0",
+		"esbuild": "^0.18.17",
+		"license-checker": "^25.0.1",
+		"shelljs": "^0.8.5",
+		"shx": "^0.3.4",
+		"ts-jest": "^29.1.2",
+		"vscode-oniguruma": "^1.7.0",
+		"vscode-textmate": "^9.0.0"
+	},
+	"__metadata": {
+		"installedTimestamp": 1739444922881,
+		"size": 1964320
+	}
+}
